@@ -12,3 +12,11 @@ export function queryLogin(params: UserParams) {
     data: params,
   });
 }
+
+export function queryRegister(params: UserParams) {
+  return request({
+    url: "/register",
+    method: "POST",
+    data: params,
+  });
+}

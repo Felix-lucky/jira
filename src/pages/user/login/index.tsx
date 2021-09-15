@@ -2,8 +2,10 @@ import React from "react";
 import { Form, Input } from "antd";
 import { ButtonSubmit } from "../index";
 import { queryLogin, UserParams } from "services/user";
+import { useAuth } from "context";
 
 export default function Login() {
+  const { setAuthToken } = useAuth();
   const onFinish = (values: UserParams) => {
     console.log(values);
     queryLogin(values).then((res) => {
