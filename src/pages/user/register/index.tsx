@@ -1,14 +1,15 @@
 import React from "react";
 import { Form, Input } from "antd";
 import { ButtonSubmit } from "../index";
+import { queryRegister, UserParams } from "services/user";
 
 export default function Register() {
-  const onFinish = (values: {
-    username: string;
-    password: string;
-    confirmPassword: string;
-  }) => {
-    console.log(values);
+  const onFinish = (values: UserParams) => {
+    const { username, password } = values;
+    queryRegister({ username, password }).then((res) => {
+      console.log(res);
+    });
+    // console.log(values);
   };
   return (
     <Form onFinish={onFinish}>
