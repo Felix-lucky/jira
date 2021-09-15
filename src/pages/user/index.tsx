@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, Button } from "antd";
 import styled from "styled-components";
 import Register from "./register";
@@ -8,13 +8,17 @@ import left from "assets/left.svg";
 import right from "assets/right.svg";
 
 export default function User() {
+  const [isRegister, setIsRegister] = useState(false);
   return (
     <Container>
       <Header />
       <Background />
       <ShadowCard>
-        <Title>请注册</Title>
-        {true ? <Login /> : <Register />}
+        <Title>{isRegister ? "请注册" : "请登录"}</Title>
+        {isRegister ? <Register /> : <Login />}
+        <ButtonLink type="link" onClick={() => setIsRegister(!isRegister)}>
+          {isRegister ? "已经有账号直接登录" : "没有账号注册新账号"}
+        </ButtonLink>
       </ShadowCard>
     </Container>
   );
@@ -55,7 +59,7 @@ const Title = styled.h2`
 
 const ShadowCard = styled(Card)`
   width: 40rem;
-  min-height: 40rem;
+  min-height: 48rem;
   padding: 3.2rem 4rem;
   border-radius: 0.3rem;
   box-sizing: border-box;
@@ -65,4 +69,10 @@ const ShadowCard = styled(Card)`
 export const ButtonSubmit = styled(Button)`
   width: 100%;
   margin-top: 2rem;
+`;
+
+const ButtonLink = styled(Button)`
+  width: 100%;
+  text-align: center;
+  margin-top: 1rem;
 `;

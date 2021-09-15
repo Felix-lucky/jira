@@ -3,7 +3,13 @@ import { Form, Input } from "antd";
 import { ButtonSubmit } from "../index";
 
 export default function Register() {
-  const onFinish = () => {};
+  const onFinish = (values: {
+    username: string;
+    password: string;
+    confirmPassword: string;
+  }) => {
+    console.log(values);
+  };
   return (
     <Form onFinish={onFinish}>
       <Form.Item

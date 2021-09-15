@@ -1,9 +1,15 @@
 import React from "react";
 import { Form, Input } from "antd";
 import { ButtonSubmit } from "../index";
+import { queryLogin, UserParams } from "services/user";
 
 export default function Login() {
-  const onFinish = () => {};
+  const onFinish = (values: UserParams) => {
+    console.log(values);
+    queryLogin(values).then((res) => {
+      console.log(res);
+    });
+  };
   return (
     <Form onFinish={onFinish}>
       <Form.Item
