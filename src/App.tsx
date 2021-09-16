@@ -1,13 +1,12 @@
 import React from "react";
 import User from "pages/user";
+import Dashboard from "pages/dashboard";
+import { useAuth } from "context/authCintext";
 import "./App.css";
 
 function App() {
-  return (
-    <div className="App">
-      <User />
-    </div>
-  );
+  const { user } = useAuth();
+  return <div className="App">{user ? <Dashboard /> : <User />}</div>;
 }
 
 export default App;

@@ -1,74 +1,56 @@
-import axios from "axios";
+import { useCallback } from "react";
+import qs from "qs";
+import { useAuth } from "context/authCintext";
+import { logout } from "./auth";
 
-const Axios = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
-  timeout: 5000,
-});
+export const BASE_URL = process.env.REACT_APP_API_URL;
 
-Axios.interceptors.request.use(
-  (config) => {
-    // if (store.getters.token) {
-    config.headers["Authorization"] = `Bearer`;
-    // }
-    return config;
-  },
-  (error) => {
-    // do something with request error
-    console.log(error); // for debug
-    return Promise.reject(error);
+interface Config extends RequestInit {
+  data?: object;
+  token?: string;
+}
+
+export const request = async (
+  url: string,
+  { data, token, headers, ...config }: Config = {}
+) => {
+  const mergeConfig = {
+    method: "GET",
+    headers: {
+      Authorization: token ? `Bearer ${token}` : "",
+      "Content-Type": data ? `application/json` : "",
+    },
+    ...config,
+  };
+
+  if (mergeConfig.method.toUpperCase() === "GET") {
+    url += `?${qs.stringify(data)}`;
+  } else {
+    mergeConfig.body = JSON.stringify(data || {});
   }
-);
 
-// response interceptor
-Axios.interceptors.response.use(
-  /**
-   * If you want to get http information such as headers or status
-   * Please return  response => response
-   */
-
-  /**
-   * Determine the request status by custom code
-   * Here is just an example
-   * You can also judge the status by HTTP Status Code
-   */
-  (response) => {
-    const res = response.data;
-
-    // if the custom code is not 20000, it is judged as an error.
-    if (res.code !== 20000) {
-      // Message({
-      //   message: res.message || 'Error',
-      //   type: 'error',
-      //   duration: 5 * 1000
-      // })
-
-      // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
-        // to re-login
-        // MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
-        //   confirmButtonText: 'Re-Login',
-        //   cancelButtonText: 'Cancel',
-        //   type: 'warning'
-        // }).then(() => {
-        //   store.dispatch('user/resetToken').then(() => {
-        //     location.reload()
-        //   })
-        // })
+  return window
+    .fetch(`${BASE_URL}/${url}`, mergeConfig)
+    .then(async (response) => {
+      if (response.status === 401) {
+        await logout();
+        window.location.reload();
+        return Promise.resolve({ message: "请重新登录" });
       }
-      return Promise.reject(new Error(res.message || "Error"));
-    } else {
-      return res;
-    }
-  },
-  (error) => {
-    console.log("err" + error); // for debug
-    // Message({
-    //   message: error.message,
-    //   type: 'error',
-    //   duration: 5 * 1000
-    // })
-    return Promise.reject(error);
-  }
-);
+      const data = await response.json();
+      if (response.ok) {
+        return data;
+      } else {
+        return Promise.reject(data);
+      }
+    });
+};
 
-export default Axios;
+export const useRequest = () => {
+  const { user } = useAuth();
+  return useCallback(
+    (...[url, config]: Parameters<typeof request>) =>
+      request(url, { ...config, token: user?.token }),
+    [user?.token]
+  );
+};

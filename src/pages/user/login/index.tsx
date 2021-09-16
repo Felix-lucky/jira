@@ -1,16 +1,14 @@
 import React from "react";
 import { Form, Input } from "antd";
 import { ButtonSubmit } from "../index";
-import { queryLogin, UserParams } from "services/user";
-import { useAuth } from "context";
+import { UserParams } from "types";
+import { useAuth } from "context/authCintext";
 
 export default function Login() {
-  const { setAuthToken } = useAuth();
+  const { login, user } = useAuth();
   const onFinish = (values: UserParams) => {
+    login(values);
     console.log(values);
-    queryLogin(values).then((res) => {
-      console.log(res);
-    });
   };
   return (
     <Form onFinish={onFinish}>
