@@ -11,3 +11,12 @@ export interface User {
   organization: string;
   token: string;
 }
+
+export interface Project {
+  id: number;
+  name: string;
+  personId: number;
+  pin: boolean;
+  organization: string;
+  created: number;
+}
