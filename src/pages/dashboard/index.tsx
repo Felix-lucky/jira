@@ -1,24 +1,23 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import { useAuth } from "context/authCintext";
-import { Button } from "antd";
+import { Dropdown, Menu } from "antd";
 import styled from "styled-components";
 import { Row } from "components/styled";
 import ProjectList from "pages/projectList";
+import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg";
 
 export default function Dashboard() {
-  const { logout } = useAuth();
   return (
     <Container>
       <Header between={true}>
         <HeaderLeft gap={true}>
-          <h1>logo</h1>
-          <h1>logo</h1>
-          <h1>logo</h1>
+          <SoftwareLogo width="18rem" color="rgb(38, 132, 255)" />
+          <h1>项目</h1>
+          <h1>用户</h1>
         </HeaderLeft>
         <HeaderRight>
-          <Button type="primary" onClick={logout}>
-            登出
-          </Button>
+          <UserInfo />
         </HeaderRight>
       </Header>
       <ProjectList />
@@ -26,6 +25,23 @@ export default function Dashboard() {
     </Container>
   );
 }
+
+const UserInfo = () => {
+  const { logout, user } = useAuth();
+  return (
+    <Dropdown
+      overlay={
+        <Menu>
+          <Menu.Item key="logout">
+            <a onClick={logout}>登出</a>
+          </Menu.Item>
+        </Menu>
+      }
+    >
+      <a onClick={(e) => e.preventDefault()}> Hi, {user?.name}</a>
+    </Dropdown>
+  );
+};
 
 const Container = styled.div`
   display: grid;

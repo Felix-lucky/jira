@@ -15,7 +15,7 @@ export interface User {
 export interface Project {
   id: number;
   name: string;
-  personId: number;
+  personId: string | number;
   pin: boolean;
   organization: string;
   created: number;

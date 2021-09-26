@@ -1,13 +1,13 @@
 import React from "react";
+import dayjs from "dayjs";
 import { Table, TableProps } from "antd";
 import { User, Project } from "types";
 
 interface ListProps extends TableProps<Project> {
   users: User[];
-  list: Project[];
 }
 
-export default function List({ users, list }: ListProps) {
+export default function List({ users, ...props }: ListProps) {
   return (
     <Table
       pagination={false}
@@ -19,6 +19,11 @@ export default function List({ users, list }: ListProps) {
           sorter: (a, b) => a.name.localeCompare(b.name),
         },
         {
+          title: "部门",
+          dataIndex: "name",
+          key: "name",
+        },
+        {
           title: "负责人",
           render: (text, record) => (
             <span>
@@ -28,12 +33,19 @@ export default function List({ users, list }: ListProps) {
           ),
         },
         {
-          title: "住址",
-          dataIndex: "address",
-          key: "address",
+          title: "创建时间",
+          dataIndex: "created",
+          key: "created",
+          render: (text, record) => (
+            <span>
+              {record?.created
+                ? dayjs(record.created).format("YYYY-MM-DD")
+                : "无"}
+            </span>
+          ),
         },
       ]}
-      dataSource={list}
+      {...props}
     />
   );
 }
