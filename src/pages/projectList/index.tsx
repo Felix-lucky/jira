@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Search from "./search";
 import List from "./list";
-import { useDebounce } from "utils";
+import { useDebounce, useDocumentTitle } from "utils";
 import { useProjects } from "utils/project";
 import { useUsers } from "utils/users";
 
@@ -11,7 +11,7 @@ export default function ProjectList() {
   const debounceParam = useDebounce(param);
   const { isLoading, data: list } = useProjects(debounceParam);
   const { data: users } = useUsers();
-
+  useDocumentTitle("项目列表", false);
   return (
     <Container>
       <h1>项目列表</h1>

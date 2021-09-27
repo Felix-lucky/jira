@@ -12,11 +12,22 @@ const defaultInitialState: State<null> = {
   status: "idle",
 };
 
-export const useAsync = <T>(initialState?: State<T>) => {
+const defaultConfig = {
+  throwOnError: false,
+};
+
+export const useAsync = <T>(
+  initialState?: State<T>,
+  initialConfig?: typeof defaultConfig
+) => {
   const [state, setState] = useState<State<T>>({
     ...defaultInitialState,
     ...initialState,
   });
+  const config = {
+    ...defaultConfig,
+    ...initialConfig,
+  };
 
   const setData = (data: T) =>
     setState((stat: State<T>) => ({ ...stat, data, status: "success" }));
@@ -36,6 +47,9 @@ export const useAsync = <T>(initialState?: State<T>) => {
       })
       .catch((error) => {
         setError(error);
+        if (config.throwOnError) {
+          return Promise.reject(error);
+        }
         return error;
       });
   };

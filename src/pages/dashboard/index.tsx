@@ -33,7 +33,9 @@ const UserInfo = () => {
       overlay={
         <Menu>
           <Menu.Item key="logout">
-            <a onClick={logout}>登出</a>
+            <a onClick={logout} style={{ color: "#1890ff" }}>
+              登出
+            </a>
           </Menu.Item>
         </Menu>
       }

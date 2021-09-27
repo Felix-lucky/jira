@@ -1,8 +1,10 @@
-import React, { ReactNode, useState, useContext } from "react";
+import React, { ReactNode, useContext } from "react";
 import { User, UserParams } from "types";
 import * as Auth from "utils/auth";
 import { request } from "utils/request";
 import { useMount } from "utils";
+import { useAsync } from "utils/useAsync";
+import { FullPageLoading, FullPageError } from "components/fullPage";
 
 interface Injected {
   user: User | null;
@@ -26,15 +28,30 @@ const userDefaults = async () => {
 };
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const {
+    data: user,
+    isLoading,
+    isIdle,
+    error,
+    isError,
+    setData: setUser,
+    run,
+  } = useAsync<User | null>();
   const login = (params: UserParams) => Auth.login(params).then(setUser);
   const register = (params: UserParams) => Auth.register(params).then(setUser);
   const logout = () => Auth.logout().then(() => setUser(null));
 
   useMount(() => {
-    userDefaults().then(setUser);
+    run(userDefaults());
   });
 
+  if (isIdle || isLoading) {
+    return <FullPageLoading />;
+  }
+
+  if (isError) {
+    return <FullPageError error={error} />;
+  }
   return (
     <AuthContext.Provider
       value={{ user, login, register, logout }}

@@ -1,21 +1,31 @@
 import React, { useState } from "react";
-import { Card, Button } from "antd";
+import { Card, Button, Alert } from "antd";
 import styled from "styled-components";
 import Register from "./register";
 import Login from "./login";
 import logo from "assets/logo.svg";
 import left from "assets/left.svg";
 import right from "assets/right.svg";
+import { useDocumentTitle } from "utils";
 
 export default function User() {
   const [isRegister, setIsRegister] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+  useDocumentTitle("请登录注册继续");
   return (
     <Container>
       <Header />
       <Background />
       <ShadowCard>
+        {error ? (
+          <Alert message={error.message} type="error" showIcon closable />
+        ) : null}
         <Title>{isRegister ? "请注册" : "请登录"}</Title>
-        {isRegister ? <Register /> : <Login />}
+        {isRegister ? (
+          <Register onError={setError} />
+        ) : (
+          <Login onError={setError} />
+        )}
         <ButtonLink type="link" onClick={() => setIsRegister(!isRegister)}>
           {isRegister ? "已经有账号直接登录" : "没有账号注册新账号"}
         </ButtonLink>

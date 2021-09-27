@@ -3,12 +3,22 @@ import { Form, Input } from "antd";
 import { ButtonSubmit } from "../index";
 import { UserParams } from "types";
 import { useAuth } from "context/authCintext";
+import { useAsync } from "utils/useAsync";
 
-export default function Register() {
+export default function Register({
+  onError,
+}: {
+  onError: (error: Error) => void;
+}) {
   const { register } = useAuth();
-  const onFinish = (values: UserParams) => {
+  const { run, isLoading } = useAsync(undefined, { throwOnError: true });
+  const onFinish = async (values: UserParams) => {
     const { username, password } = values;
-    register({ username, password });
+    try {
+      await run(register({ username, password }));
+    } catch (e: any) {
+      onError(e);
+    }
   };
   return (
     <Form onFinish={onFinish}>
@@ -48,7 +58,7 @@ export default function Register() {
         <Input.Password placeholder="请确认密码" />
       </Form.Item>
       <Form.Item>
-        <ButtonSubmit type="primary" htmlType="submit">
+        <ButtonSubmit loading={isLoading} type="primary" htmlType="submit">
           注册
         </ButtonSubmit>
       </Form.Item>
