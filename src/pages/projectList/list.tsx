@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import { Table, TableProps } from "antd";
 import { User, Project } from "types";
@@ -10,6 +11,7 @@ interface ListProps extends TableProps<Project> {
 export default function List({ users, ...props }: ListProps) {
   return (
     <Table
+      rowKey={(record) => record.id}
       pagination={false}
       columns={[
         {
@@ -17,14 +19,19 @@ export default function List({ users, ...props }: ListProps) {
           dataIndex: "name",
           key: "name",
           sorter: (a, b) => a.name.localeCompare(b.name),
+          render: (text, record) => (
+            <Link to={String(record?.id)}>{record.name}</Link>
+          ),
         },
         {
           title: "部门",
-          dataIndex: "name",
-          key: "name",
+          dataIndex: "organization",
+          key: "organization",
         },
         {
           title: "负责人",
+          dataIndex: "personId",
+          key: "personId",
           render: (text, record) => (
             <span>
               {users.find((user) => user.id === record.personId)?.name ||
