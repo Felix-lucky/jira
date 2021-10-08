@@ -4,7 +4,7 @@ import * as Auth from "utils/auth";
 import { request } from "utils/request";
 import { useMount } from "utils";
 import { useAsync } from "utils/useAsync";
-import { FullPageLoading, FullPageError } from "components/fullPage";
+import { FullPageLoading, FullPageError } from "components/FullPage";
 
 interface Injected {
   user: User | null;

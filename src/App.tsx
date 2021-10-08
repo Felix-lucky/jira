@@ -3,7 +3,7 @@ import User from "pages/user";
 import Dashboard from "pages/dashboard";
 import { useAuth } from "context/authCintext";
 import ErrorBoundary from "components/ErrorBoundary";
-import { FullPageError } from "components/fullPage";
+import { FullPageError } from "components/FullPage";
 import "./App.css";
 
 function App() {
