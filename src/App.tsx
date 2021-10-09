@@ -1,7 +1,7 @@
 import React from "react";
 import User from "pages/user";
 import Dashboard from "pages/dashboard";
-import { useAuth } from "context/authCintext";
+import { useAuth } from "context/authContext";
 import ErrorBoundary from "components/ErrorBoundary";
 import { FullPageError } from "components/FullPage";
 import "./App.css";

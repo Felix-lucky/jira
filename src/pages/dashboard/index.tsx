@@ -2,7 +2,7 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
-import { useAuth } from "context/authCintext";
+import { useAuth } from "context/authContext";
 import { Dropdown, Menu, Button } from "antd";
 import styled from "styled-components";
 import { Row } from "components/styled";

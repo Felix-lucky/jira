@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Input } from "antd";
 import { ButtonSubmit } from "../index";
 import { UserParams } from "types";
-import { useAuth } from "context/authCintext";
+import { useAuth } from "context/authContext";
 import { useAsync } from "utils/useAsync";
 
 export default function Register({

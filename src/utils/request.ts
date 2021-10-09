@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import qs from "qs";
-import { useAuth } from "context/authCintext";
+import { useAuth } from "context/authContext";
 import { logout } from "./auth";
 
 export const BASE_URL = process.env.REACT_APP_API_URL;

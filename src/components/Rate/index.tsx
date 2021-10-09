@@ -3,7 +3,7 @@ import { Rate } from "antd";
 
 interface PinProps extends React.ComponentProps<typeof Rate> {
   checked: boolean;
-  onCheckedChange: (value: boolean) => void;
+  onCheckedChange?: (value: boolean) => void;
 }
 
 const Pin = ({ checked, onCheckedChange, ...restProps }: PinProps) => {
