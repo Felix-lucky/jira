@@ -3,13 +3,15 @@ import React from "react";
 import { Routes, Route, Navigate } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import { useAuth } from "context/authContext";
-import { Dropdown, Menu, Button } from "antd";
+import { Dropdown, Menu } from "antd";
 import styled from "styled-components";
 import { Row } from "components/styled";
 import ProjectList from "pages/projectList";
 import ProjectDetail from "pages/project";
 import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg";
 import { resetRoute } from "utils";
+import ProjectPopover from "components/ProjectPopover";
+import { ButtonNoPadding } from "components/styled";
 
 export default function Dashboard() {
   return (
@@ -32,12 +34,11 @@ const PageHeader = () => {
   return (
     <Header between={true}>
       <HeaderLeft gap={true}>
-        <Button type="link" onClick={resetRoute}>
+        <ButtonNoPadding type="link" onClick={resetRoute}>
           <SoftwareLogo width="18rem" color="rgb(38, 132, 255)" />
-        </Button>
-
-        <h1>项目</h1>
-        <h1>用户</h1>
+        </ButtonNoPadding>
+        <ProjectPopover />
+        <span>用户</span>
       </HeaderLeft>
       <HeaderRight>
         <UserInfo />

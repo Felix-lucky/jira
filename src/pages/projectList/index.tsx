@@ -6,6 +6,7 @@ import { useDebounce, useDocumentTitle } from "utils";
 import { useProjects } from "utils/project";
 import { useUsers } from "utils/users";
 import { useProjectsSearchParams } from "./util";
+import { ButtonNoPadding, Row } from "components/styled";
 
 export default function ProjectList() {
   const [param, setParam] = useProjectsSearchParams();
@@ -14,7 +15,11 @@ export default function ProjectList() {
   useDocumentTitle("项目列表", false);
   return (
     <Container>
-      <h1>项目列表</h1>
+      <Row marginBottom={2} between={true}>
+        <h1>项目列表</h1>
+        <ButtonNoPadding type="link">创建项目</ButtonNoPadding>
+      </Row>
+
       <Search param={param} setParam={setParam} />
       <List
         refresh={retry}
