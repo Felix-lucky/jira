@@ -12,20 +12,22 @@ import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg";
 import { resetRoute } from "utils";
 import ProjectPopover from "components/ProjectPopover";
 import { ButtonNoPadding } from "components/styled";
+import ProjectModal from "pages/projectList/projectModal";
 
 export default function Dashboard() {
   return (
     <Container>
-      <PageHeader />
-      <Main>
-        <Router>
+      <Router>
+        <PageHeader />
+        <Main>
           <Routes>
             <Route path="/projects" element={<ProjectList />} />
             <Route path="/projects/:projectId/*" element={<ProjectDetail />} />
             <Navigate to="/projects" />
           </Routes>
-        </Router>
-      </Main>
+        </Main>
+        <ProjectModal />
+      </Router>
     </Container>
   );
 }

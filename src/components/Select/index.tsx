@@ -9,8 +9,8 @@ interface IdSelectProps
     SelectProps,
     "value" | "onChange" | "defaultOptionsName" | "options"
   > {
-  value: string | number | undefined | null;
-  onChange: (value?: number) => void;
+  value?: string | number | undefined | null;
+  onChange?: (value?: number) => void;
   defaultOptionName?: string;
   options?: { name: string; id: number }[];
 }

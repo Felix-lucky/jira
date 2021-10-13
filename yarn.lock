@@ -10603,6 +10603,15 @@ react-query@^2.26.3:
   dependencies:
     "@babel/runtime" "^7.5.5"
 
+react-query@^3.26.0:
+  version "3.26.0"
+  resolved "https://registry.npmmirror.com/react-query/download/react-query-3.26.0.tgz#7083a8622afdf946ee6d8f3a6d94591b980c1aa0"
+  integrity sha1-cIOoYir9+UbubY86bZRZG5gMGqA=
+  dependencies:
+    "@babel/runtime" "^7.5.5"
+    broadcast-channel "^3.4.1"
+    match-sorter "^6.0.2"
+
 react-query@^3.5.10:
   version "3.23.2"
   resolved "https://registry.nlark.com/react-query/download/react-query-3.23.2.tgz#1f95a5af7d0797370bbeb916d54fbb516bf9f1c5"

@@ -26,7 +26,16 @@ export function FullPageError({ error }: { error: Error | null }) {
     <FullPage>
       <DevTools />
       <ErrorSvg width="40rem" />
-      <Typography.Text type={"danger"}>{error?.message}</Typography.Text>
+      <ErrorBox error={error} />
     </FullPage>
   );
 }
+
+const isError = (value: any): value is Error => value?.message;
+
+export const ErrorBox = ({ error }: { error: unknown }) => {
+  if (isError(error)) {
+    return <Typography.Text type={"danger"}>{error?.message}</Typography.Text>;
+  }
+  return null;
+};

@@ -3,9 +3,11 @@ import styled from "styled-components";
 import { Popover, List, Typography } from "antd";
 import { useProjects } from "utils/project";
 import { ButtonNoPadding } from "components/styled";
+import { useProjectModal } from "pages/projectList/util";
 
 const ProjectPopover = () => {
   const { data: projects } = useProjects();
+  const { open } = useProjectModal();
   const pinProjects = projects?.filter((project) => project?.pin);
   const content = (
     <ContentContent>
@@ -17,7 +19,9 @@ const ProjectPopover = () => {
           </List.Item>
         ))}
       </List>
-      <ButtonNoPadding type="link">创建项目</ButtonNoPadding>
+      <ButtonNoPadding type="link" onClick={open}>
+        创建项目
+      </ButtonNoPadding>
     </ContentContent>
   );
 

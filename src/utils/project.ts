@@ -1,45 +1,58 @@
-import { useEffect, useCallback } from "react";
 import { cleanObj } from "utils";
-import { useAsync } from "utils/useAsync";
 import { useRequest } from "utils/request";
 import { Project } from "types";
+import { useQuery, useMutation, QueryKey } from "react-query";
+import {
+  useAddConfig,
+  useDeleteConfig,
+  useEditConfig,
+} from "./useOptimisticOptions";
 
 export const useProjects = (param?: Partial<Project>) => {
-  const { run, ...result } = useAsync<Project[]>();
   const request = useRequest();
-  const fetchProjects = useCallback(
-    () => request("projects", { data: cleanObj(param) }),
-    [param, request]
+  return useQuery<Project[]>(["projects", cleanObj(param)], () =>
+    request("projects", { data: param })
   );
-  useEffect(() => {
-    run(fetchProjects(), { retry: fetchProjects });
-  }, [param, fetchProjects, run]);
-
-  return result;
 };
 
-export const useEditProject = () => {
-  const { run, ...result } = useAsync();
+export const useEditProject = (queryKey: QueryKey) => {
   const request = useRequest();
-  const mutate = (params: Partial<Project>) => {
-    return run(
-      request(`projects/${params.id}`, { method: "PATCH", data: params })
-    );
-  };
-  return {
-    mutate,
-    ...result,
-  };
+  return useMutation(
+    (params: Partial<Project>) =>
+      request(`projects/${params.id}`, {
+        method: "PATCH",
+        data: params,
+      }),
+    useEditConfig(queryKey)
+  );
 };
 
-export const useAddProject = () => {
-  const { run, ...result } = useAsync();
+export const useAddProject = (queryKey: QueryKey) => {
   const request = useRequest();
-  const mutate = (params: Partial<Project>) => {
-    return run(request(`projects`, { method: "POST", data: params }));
-  };
-  return {
-    mutate,
-    ...result,
-  };
+  return useMutation(
+    (params: Partial<Project>) =>
+      request(`projects`, {
+        method: "POST",
+        data: params,
+      }),
+    useAddConfig(queryKey)
+  );
+};
+
+export const useProject = (id?: number) => {
+  const request = useRequest();
+  return useQuery(["project", { id }], () => request(`projects/${id}`), {
+    enabled: !!id,
+  });
+};
+
+export const useDeleteProject = (queryKey: QueryKey) => {
+  const request = useRequest();
+  return useMutation(
+    (id: number) =>
+      request(`projects/${id}`, {
+        method: "DELETE",
+      }),
+    useDeleteConfig(queryKey)
+  );
 };
