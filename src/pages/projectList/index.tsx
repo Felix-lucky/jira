@@ -6,7 +6,7 @@ import { useDebounce, useDocumentTitle } from "utils";
 import { useProjects } from "utils/project";
 import { useUsers } from "utils/users";
 import { useProjectsSearchParams, useProjectModal } from "./util";
-import { ButtonNoPadding, Row } from "components/styled";
+import { ButtonNoPadding, Row, ScreenContainer } from "components/styled";
 
 export default function ProjectList() {
   const [param, setParam] = useProjectsSearchParams();
@@ -15,7 +15,7 @@ export default function ProjectList() {
   const { data: users } = useUsers();
   useDocumentTitle("项目列表", false);
   return (
-    <Container>
+    <ScreenContainer>
       <Row marginBottom={2} between={true}>
         <h1>项目列表</h1>
         <ButtonNoPadding type="link" onClick={open}>
@@ -25,10 +25,6 @@ export default function ProjectList() {
 
       <Search param={param} setParam={setParam} />
       <List loading={isLoading} users={users || []} dataSource={list || []} />
-    </Container>
+    </ScreenContainer>
   );
 }
-
-const Container = styled.div`
-  padding: 3.2rem;
-`;

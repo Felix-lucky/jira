@@ -1,6 +1,7 @@
 import React from "react";
 import { Select } from "antd";
 import { useUsers } from "utils/users";
+import { useTaskTypes } from "utils/taskType";
 
 type SelectProps = React.ComponentProps<typeof Select>;
 
@@ -45,6 +46,13 @@ export const IdSelect = ({
 const UsersSelect = (props: React.ComponentProps<typeof IdSelect>) => {
   const { data: users } = useUsers();
   return <IdSelect options={users || []} {...props} />;
+};
+
+export const TaskTypeSelect = (
+  props: React.ComponentProps<typeof IdSelect>
+) => {
+  const { data: taskTypes } = useTaskTypes();
+  return <IdSelect options={taskTypes || []} {...props} />;
 };
 
 export default UsersSelect;

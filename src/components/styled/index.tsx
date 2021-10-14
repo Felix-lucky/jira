@@ -25,3 +25,10 @@ export const Row = styled.div<{
 export const ButtonNoPadding = styled(Button)`
   padding: 0;
 `;
+
+export const ScreenContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 3.2rem;
+`;

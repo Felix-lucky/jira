@@ -20,3 +20,25 @@ export interface Project {
   organization: string;
   created: number;
 }
+
+export interface Kanban {
+  id: number;
+  name: string;
+  projectId: number;
+}
+
+export interface Task {
+  id: number;
+  name: string;
+  processorId: number;
+  projectId: number;
+  epicId: number;
+  kanbanId: number;
+  typeId: number;
+  note: string;
+}
+
+export interface TaskType {
+  id: number;
+  name: string;
+}

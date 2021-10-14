@@ -18,6 +18,7 @@ export default function List({ users, ...props }: ListProps) {
   const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
   return (
     <Table
+      locale={{ emptyText: "暂无数据" }}
       rowKey={(record) => record.id}
       pagination={false}
       columns={[

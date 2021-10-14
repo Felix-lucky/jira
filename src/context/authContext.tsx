@@ -5,6 +5,7 @@ import { request } from "utils/request";
 import { useMount } from "utils";
 import { useAsync } from "utils/useAsync";
 import { FullPageLoading, FullPageError } from "components/FullPage";
+import { useQueryClient } from "react-query";
 
 interface Injected {
   user: User | null;
@@ -37,9 +38,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setData: setUser,
     run,
   } = useAsync<User | null>();
+  const queryClient = useQueryClient();
   const login = (params: UserParams) => Auth.login(params).then(setUser);
   const register = (params: UserParams) => Auth.register(params).then(setUser);
-  const logout = () => Auth.logout().then(() => setUser(null));
+  const logout = () =>
+    Auth.logout().then(() => {
+      setUser(null);
+      queryClient.clear();
+    });
 
   useMount(() => {
     run(userDefaults());
