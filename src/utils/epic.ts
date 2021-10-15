@@ -1,21 +1,21 @@
 import { QueryKey, useMutation, useQuery } from "react-query";
-import { Kanban } from "types";
+import { Epic } from "types";
 import { cleanObj } from "utils";
 import { useRequest } from "./request";
 import { useAddConfig, useDeleteConfig } from "./useOptimisticOptions";
 
-export const useKanbans = (param?: Partial<Kanban>) => {
+export const useEpics = (param?: Partial<Epic>) => {
   const request = useRequest();
-  return useQuery<Kanban[]>(["kanbans", cleanObj(param)], () =>
-    request("kanbans", { data: param })
+  return useQuery<Epic[]>(["epics", cleanObj(param)], () =>
+    request("epics", { data: param })
   );
 };
 
-export const useAddKanban = (queryKey: QueryKey) => {
+export const useAddEpic = (queryKey: QueryKey) => {
   const request = useRequest();
   return useMutation(
-    (params: Partial<Kanban>) =>
-      request(`kanbans`, {
+    (params: Partial<Epic>) =>
+      request(`epics`, {
         method: "POST",
         data: params,
       }),
@@ -23,11 +23,11 @@ export const useAddKanban = (queryKey: QueryKey) => {
   );
 };
 
-export const useDeleteKanban = (queryKey: QueryKey) => {
+export const useDeleteEpic = (queryKey: QueryKey) => {
   const request = useRequest();
   return useMutation(
     (id: number) =>
-      request(`kanbans/${id}`, {
+      request(`epics/${id}`, {
         method: "DELETE",
       }),
     useDeleteConfig(queryKey)

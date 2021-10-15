@@ -12,8 +12,10 @@ import {
 import SearchPanel from "./search";
 import { useTasks } from "utils/task";
 import { Spin } from "antd";
+import CreateKanban from "./createKanban";
+import TaskModal from "./taskModal";
 
-export default function KanBan() {
+export default function Kanban() {
   useDocumentTitle("看板列表");
 
   const { data: currentProject } = useProjectInurl();
@@ -33,8 +35,10 @@ export default function KanBan() {
           {kanbans?.map((item) => (
             <KanbanColumn key={item.id} kanban={item} />
           ))}
+          <CreateKanban />
         </ContainerKanban>
       )}
+      <TaskModal />
     </ScreenContainer>
   );
 }

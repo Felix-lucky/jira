@@ -50,4 +50,5 @@ const Aside = styled.div`
 const Main = styled.div`
   display: flex;
   box-shadow: -5px 0 5px -5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 `;
