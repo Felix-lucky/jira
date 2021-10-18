@@ -13,6 +13,7 @@ import { resetRoute } from "utils";
 import ProjectPopover from "components/ProjectPopover";
 import { ButtonNoPadding } from "components/styled";
 import ProjectModal from "pages/projectList/projectModal";
+import UserPopover from "components/UserPopover";
 
 export default function Dashboard() {
   return (
@@ -40,7 +41,7 @@ const PageHeader = () => {
           <SoftwareLogo width="18rem" color="rgb(38, 132, 255)" />
         </ButtonNoPadding>
         <ProjectPopover />
-        <span>用户</span>
+        <UserPopover />
       </HeaderLeft>
       <HeaderRight>
         <UserInfo />

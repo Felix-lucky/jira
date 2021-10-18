@@ -1,12 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { Popover, List, Typography } from "antd";
+import { Popover, List, Typography, Divider } from "antd";
 import { useProjects } from "utils/project";
 import { ButtonNoPadding } from "components/styled";
 import { useProjectModal } from "pages/projectList/util";
+import { Link } from "react-router-dom";
 
 const ProjectPopover = () => {
-  const { data: projects } = useProjects();
+  const { data: projects, refetch } = useProjects();
   const { open } = useProjectModal();
   const pinProjects = projects?.filter((project) => project?.pin);
   const content = (
@@ -15,10 +16,11 @@ const ProjectPopover = () => {
       <List>
         {pinProjects?.map((paroject) => (
           <List.Item key={paroject.id}>
-            <List.Item.Meta title={paroject.name} />
+            <Link to={`projects/${paroject?.id}`}>{paroject.name}</Link>
           </List.Item>
         ))}
       </List>
+      <Divider dashed />
       <ButtonNoPadding type="link" onClick={open}>
         创建项目
       </ButtonNoPadding>
@@ -26,7 +28,11 @@ const ProjectPopover = () => {
   );
 
   return (
-    <Popover placement="bottom" content={content}>
+    <Popover
+      onVisibleChange={() => refetch()}
+      placement="bottom"
+      content={content}
+    >
       <span>项目</span>
     </Popover>
   );
