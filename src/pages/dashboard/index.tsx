@@ -6,14 +6,15 @@ import { useAuth } from "context/authContext";
 import { Dropdown, Menu } from "antd";
 import styled from "styled-components";
 import { Row } from "components/styled";
-import ProjectList from "pages/projectList";
-import ProjectDetail from "pages/project";
 import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg";
 import { resetRoute } from "utils";
 import ProjectPopover from "components/ProjectPopover";
 import { ButtonNoPadding } from "components/styled";
 import ProjectModal from "pages/projectList/projectModal";
 import UserPopover from "components/UserPopover";
+
+const ProjectList = React.lazy(() => import("pages/projectList"));
+const ProjectDetail = React.lazy(() => import("pages/project"));
 
 export default function Dashboard() {
   return (

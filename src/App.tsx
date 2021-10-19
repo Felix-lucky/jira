@@ -1,20 +1,21 @@
-import React from "react";
-import User from "pages/user";
-import Dashboard from "pages/dashboard";
+import React, { Suspense, lazy } from "react";
 import { useAuth } from "context/authContext";
 import ErrorBoundary from "components/ErrorBoundary";
-import { FullPageError } from "components/FullPage";
+import { FullPageError, FullPageLoading } from "components/FullPage";
 import "./App.css";
 
-function App() {
+const Dashboard = lazy(() => import("pages/dashboard"));
+const User = lazy(() => import("pages/user"));
+
+export default function App() {
   const { user } = useAuth();
   return (
     <div className="App">
       <ErrorBoundary fullbackRender={FullPageError}>
-        {user ? <Dashboard /> : <User />}
+        <Suspense fallback={<FullPageLoading />}>
+          {user ? <Dashboard /> : <User />}
+        </Suspense>
       </ErrorBoundary>
     </div>
   );
 }
-
-export default App;
